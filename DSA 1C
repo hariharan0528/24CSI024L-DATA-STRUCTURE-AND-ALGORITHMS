@@ -1,0 +1,53 @@
+#include <stdio.h>
+
+int main() {
+    int N;
+    scanf("%d", &N);
+
+    int arr[N];
+
+    // Read array
+    for (int i = 0; i < N; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    // Count total number of 1s
+    int countOnes = 0;
+    for (int i = 0; i < N; i++) {
+        if (arr[i] == 1)
+            countOnes++;
+    }
+
+    // If there are 0 or 1 ones, no swaps are needed
+    if (countOnes <= 1) {
+        printf("Min Swaps: 0");
+        return 0;
+    }
+
+    // Count number of 1s in the first window
+    int currentOnes = 0;
+    for (int i = 0; i < countOnes; i++) {
+        if (arr[i] == 1)
+            currentOnes++;
+    }
+
+    int maxOnes = currentOnes;
+
+    // Slide the window
+    for (int i = countOnes; i < N; i++) {
+        if (arr[i] == 1)
+            currentOnes++;
+        if (arr[i - countOnes] == 1)
+            currentOnes--;
+
+        if (currentOnes > maxOnes)
+            maxOnes = currentOnes;
+    }
+
+    // Minimum swaps
+    int minSwaps = countOnes - maxOnes;
+
+    printf("Min Swaps: %d", minSwaps);
+
+    return 0;
+}
